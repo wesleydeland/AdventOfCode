@@ -1,0 +1,21 @@
+#!csharp
+
+int counter = 0;
+int i = -1;
+int numIncreases = 0;
+
+foreach (string line in System.IO.File.ReadLines(@"C:\Users\Wesley\Downloads\input.txt"))
+{
+    int j = Convert.ToInt32(line);
+    if(counter != 0)
+    {
+        if (j > i)
+        {
+            numIncreases++;
+        }
+    }
+    i = Convert.ToInt32(line);
+    counter++;
+}
+
+System.Console.WriteLine(numIncreases);
