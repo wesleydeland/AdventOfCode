@@ -39,3 +39,40 @@ for (int i = 0; i < text[i].Length; ++i)
 int gammaInt = Convert.ToInt32(gammaRate, 2);
 int epsilonInt = Convert.ToInt32(epsilonRate, 2);
 System.Console.WriteLine(gammaInt*epsilonInt);
+
+#!csharp
+
+//part2
+
+int CalculateRating(char bit)
+{
+    List<string> text = System.IO.File.ReadAllLines(@"input.txt").ToList();
+    var i = 0;
+    while (text.Count > 1)
+    {
+        var groups = text.Select(x => x[i]).GroupBy(x => x).OrderByDescending(x => x.Count());
+        bool areEqual = groups.First().Count() == groups.ElementAt(1).Count();
+
+        char tempBit = ' ';
+        switch (bit)
+        {
+            case '0':
+                tempBit = areEqual ? '1' : groups.First().Key;
+                break;
+            case '1':
+                tempBit = areEqual ? '0' : groups.ElementAt(1).Key;
+                break;
+        }
+
+        text.RemoveAll(x => x[i] != tempBit);
+        ++i;
+    }
+
+    return Convert.ToInt32(text.FirstOrDefault(), 2);
+}
+
+var o2Rating = CalculateRating('0');
+Console.WriteLine(o2Rating);
+var co2Rating = CalculateRating('1');
+Console.WriteLine(co2Rating);
+Console.WriteLine(o2Rating * co2Rating);
