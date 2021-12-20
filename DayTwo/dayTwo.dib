@@ -25,3 +25,36 @@ foreach (string line in System.IO.File.ReadLines(@"dayTwoInput.txt"))
 System.Console.WriteLine(horizontal);
 System.Console.WriteLine(depth);
 System.Console.WriteLine(horizontal*depth);
+
+#!csharp
+
+//part 2
+int horizontal = 0;
+int depth = 0;
+int aim = 0;
+
+foreach (string line in System.IO.File.ReadLines(@"dayTwoInput.txt"))
+{
+    string action = line.Substring(0, line.IndexOf(' '));
+    int amount = Convert.ToInt32(line.Substring(line.IndexOf(' ')));
+
+    switch (action)
+    {
+        case "forward": 
+            horizontal += amount;
+            depth += (aim * amount);
+            break;
+        case "up" :
+            //depth -= amount;
+            aim -= amount;
+            break;
+        case "down":
+            //depth += amount;
+            aim += amount;
+            break;
+    }
+        
+}
+System.Console.WriteLine(horizontal);
+System.Console.WriteLine(depth);
+System.Console.WriteLine(horizontal*depth);
