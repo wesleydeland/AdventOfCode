@@ -1,0 +1,47 @@
+#!csharp
+
+List<string> text = System.IO.File.ReadAllLines(@"input.txt").ToList();
+List<int> inputNumbers = text[0].Split(',').Select(x => Convert.ToInt32(x)).ToList();
+text.RemoveAt(0);
+
+List<int[,]> arrays = new List<int[,]>();
+int i = 0;
+List<List<int>> grids = new List<List<int>>();
+while ( i < text.Count)
+{
+    if (!string.IsNullOrEmpty(text[i]))
+    {
+        List<int> rowNumbers = text[i].Split(' ').Where(x => !string.IsNullOrEmpty(x)).Select(x => Convert.ToInt32(x)).ToList();
+        grids.Add(rowNumbers);
+    }
+    System.Console.WriteLine(grids.Count);
+    i++;
+}
+
+decimal numGrids = Math.Ceiling(Decimal.Divide(grids.Count, 5));
+System.Console.WriteLine(numGrids);
+
+foreach(int num in inputNumbers)
+{
+    for(int i = 0; i < numGrids; ++i)
+    {
+        List<List<int>> grid = grids.Skip(i * 5).Take(5).ToList();
+        foreach(var row in grid)
+        {
+            for (int j = 0; j < 5; ++j)
+            {
+                if(num == row[j])
+                {
+                    row[j] = -1;
+                }
+            }
+
+            foreach (var column in row)
+            {
+                System.Console.Write(column);
+            }
+            System.Console.Write("\n");
+        }
+    }
+
+}
